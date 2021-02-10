@@ -1,12 +1,9 @@
 <template>
   <div class="home">
-    <Toast v-if="showToast" />
-    <Todos @badValue="triggerToast" />
-    <transition name="fade">
-      <div v-if="showP">hello, ninjas</div>
+    <transition name="toast">
+      <Toast v-if="showToast" />
     </transition>
-
-    <button @click="showP = !showP">Toggle</button>
+    <Todos @badValue="triggerToast" />
   </div>
 </template>
 
@@ -32,25 +29,29 @@ export default {
 </script>
 
 <style>
-/* Fade in */
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to{
-  opacity: 1;
-}
-.fade-enter-active{
-  transition: all 2s ease;
-}
+  /* Enter classes */
+  .toast-enter-from{
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  .toast-enter-to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast-enter-active{
+    transition: all 0.3s ease-in;
+  }
 
-/* Fade out */
-.fade-leave-from{
-  opacity: 1;
-}
-.fade-leave-to{
-  opacity: 0;
-}
-.fade-leave-active{
-  transition: all 2s ease;
-}
+  /* Leave classes */
+  .toast-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .toast-leave-to{
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  .toast-leave-active{
+    transition: all 0.3s ease-in;
+  }
 </style>
