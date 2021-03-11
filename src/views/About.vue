@@ -4,6 +4,7 @@
     appear
     @before-enter="beforeEnter"
     @enter="enter"
+    @after-enter="afterEnter"
     >
       <h1>About</h1>
     </transition>
@@ -15,19 +16,33 @@
 
 <script>
 import { ref } from 'vue';
+import gsap from 'gsap';
 
 export default {
   setup() {
 
     const beforeEnter = (el) => {
-      
+      console.log('before enter - set initial state');
+      el.style.transform = 'translateY(-60px)';
+      el.style.opacity = 0;
     }
 
-    const enter = (el) => {
-
+    const enter = (el, done) => {
+      console.log('starting to enter - make transition');
+      gsap.to(el, {
+        duration: 3,
+        y: 0,
+        opacity: 1,
+        ease: 'bounce.out',
+        onComplete: done
+      })
     }
 
-    return { beforeEnter, enter }
+    const afterEnter = () => {
+      console.log('after enter')
+    }
+
+    return { beforeEnter, enter, afterEnter }
   }
 }
 </script>
